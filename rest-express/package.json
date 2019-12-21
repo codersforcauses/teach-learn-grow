@@ -11,6 +11,7 @@
     "migration:create": "prisma2 lift save",
     "migrate": "prisma2 lift up",
     "test": "jest --watchAll",
+    "test:ci": "jest",
     "start": "prisma2 lift up && prisma2 generate && ts-node src/index.ts"
   },
   "dependencies": {
