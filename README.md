@@ -15,10 +15,11 @@ Make sure you have
 
 1. `git clone` the repo
 2. `cd` into frontend and do yarn install
-3. make sure you have the `.env` set and start the server with yarn start
+3. create a `.env.local` file. You can follow the `.env` but you will need to get your own pusher keys
 4. `cd` into the backend and do a `yarn install`
 5. migrate the database with `yarn migrate`
-6. start the server with `yarn dev`
+6. create a `.env` file and fill in your pusher and auth0 details. You can follow the `.env.example`
+7. start the server with `yarn dev`
 
 > should be obvious if things didn't work
 
