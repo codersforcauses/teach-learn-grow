@@ -95,8 +95,9 @@ app.post('/admin', jwtCheck, async (req, res) => {
   }
 });
 
-app.listen(process.env.PORT || 5000, () =>
+const port = process.env.PORT || 5000;
+app.listen(port, () =>
   console.log(
-    '🚀 Server ready at: http://localhost:5000\n⭐️ See sample requests: http://pris.ly/e/ts/rest-express#5-using-the-rest-api'
+    `🚀 Server ready at: http://localhost:${port}\n⭐️ See sample requests: http://pris.ly/e/ts/rest-express#5-using-the-rest-api`
   )
 );
