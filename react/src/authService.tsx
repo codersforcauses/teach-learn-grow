@@ -98,11 +98,12 @@ export const Auth0Provider = ({
 
   const handleRedirectCallback = async () => {
     setLoading(true);
-    await auth0Client.handleRedirectCallback();
+    const result = await auth0Client.handleRedirectCallback();
     const user = await auth0Client.getUser();
     setLoading(false);
     setIsAuthenticated(true);
     setUser(user);
+    return result;
   };
   return (
     <Auth0Context.Provider

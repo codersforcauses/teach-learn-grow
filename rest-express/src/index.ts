@@ -1,7 +1,6 @@
-import { Photon, User, UserCreateInput } from '@prisma/photon';
+import { Photon, UserCreateInput } from '@prisma/photon';
 import * as bodyParser from 'body-parser';
 import express from 'express';
-import admin from './services/admin';
 import { jwtCheck } from './services/auth';
 import feed from './services/feed';
 import { createMessage, deleteMessage } from './services/message';
@@ -79,19 +78,6 @@ app.get('/feed', jwtCheck, async (req, res) => {
     res.json(await feed(photon));
   } catch (err) {
     res.status(500).json(err);
-  }
-});
-
-app.post('/admin', jwtCheck, async (req, res) => {
-  try {
-    const userInfo = await getUserInfo(req.headers.authorization);
-    const user: User = await photon.users.findOne({
-      where: { id: userInfo.sub }
-    });
-
-    res.json(await admin(user, photon));
-  } catch (err) {
-    res.json(err);
   }
 });
 
