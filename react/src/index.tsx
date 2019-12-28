@@ -17,10 +17,10 @@ const onRedirectCallback = (appState?: any) => {
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#1b2b63'
+      main: 'rgb(153, 204, 0)'
     },
     secondary: {
-      main: '#fe3745'
+      main: 'rgb(79, 79, 79)'
     }
   }
 });
