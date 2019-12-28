@@ -10,12 +10,12 @@ export const Auth0Context = React.createContext<Auth0ContextData>({
   user: {},
   loading: false,
   popupOpen: false,
-  loginWithPopup: () => {},
-  handleRedirectCallback: () => {},
-  getIdTokenClaims: () => {},
+  loginWithPopup: async () => {},
+  handleRedirectCallback: async () => ({} as any),
+  getIdTokenClaims: () => ({} as any),
   loginWithRedirect: () => Promise.resolve(),
   getTokenSilently: () => Promise.resolve('placeholder'),
-  getTokenWithPopup: () => {},
+  getTokenWithPopup: () => ({} as any),
   logout: () => {}
 });
 export const useAuth0 = () => useContext(Auth0Context);
@@ -31,14 +31,14 @@ export interface Auth0ContextData {
   user: any;
   loading: boolean;
   popupOpen: boolean;
-  loginWithPopup: Function;
-  handleRedirectCallback: Function;
-  getIdTokenClaims: Function;
+  loginWithPopup: Auth0Client['loginWithPopup'];
+  handleRedirectCallback: Auth0Client['handleRedirectCallback'];
+  getIdTokenClaims: Auth0Client['getIdTokenClaims'];
   loginWithRedirect: (
     options?: RedirectLoginOptions | undefined
   ) => Promise<void>;
   getTokenSilently: () => Promise<any>;
-  getTokenWithPopup: Function;
+  getTokenWithPopup: Auth0Client['getTokenWithPopup'];
   logout: (options?: LogoutOptions) => void;
 }
 
