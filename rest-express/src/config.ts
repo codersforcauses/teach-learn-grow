@@ -8,3 +8,4 @@ export const AUTH0_DOMAIN =
   process.env.AUTH0_DOMAIN || 'https://davidy.au.auth0.com';
 export const AUTH0_AUDIENCE =
   process.env.AUTH0_AUDIENCE || 'react-express-base-app';
+export const PORT = process.env.PORT || 5000;

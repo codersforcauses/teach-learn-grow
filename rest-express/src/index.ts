@@ -1,89 +1,30 @@
-import { Photon, UserCreateInput } from '@prisma/photon';
-import * as bodyParser from 'body-parser';
 import express from 'express';
+import * as bodyParser from 'body-parser';
+import cors from 'cors';
+import { PORT } from './config';
 import { jwtCheck } from './services/auth';
-import feed from './services/feed';
-import { createMessage, deleteMessage } from './services/message';
-import pusher from './services/pusher';
-import {
-  createUser,
-  currentUser,
-  getUserInfo,
-  updateUser
-} from './services/user';
+import { upsertUser, retrieveUser } from './controllers/user';
+import { addMessage, removeMessage, getFeed } from './controllers/message';
 
-const cors = require('cors');
-
-const photon = new Photon();
 const app = express();
 
 app.use(cors());
-
 app.use(bodyParser.json());
 
-app.post(`/user`, jwtCheck, async (req, res) => {
-  try {
-    const data = await getUserInfo(req.headers.authorization);
+// user
+app.post(`/user`, jwtCheck, upsertUser);
+app.get('/currentUser', jwtCheck, retrieveUser);
 
-    const currentUser: UserCreateInput = {
-      id: data.sub,
-      avatarUrl: data.picture,
-      name: data.name,
-      nickname: data.nickname
-    };
-    const user = await photon.users.findOne({ where: { id: currentUser.id } });
-    if (!user) {
-      return res.json(await createUser(currentUser, photon));
-    } else {
-      return res.json(await updateUser(currentUser, photon));
-    }
-  } catch (err) {
-    res.status(500).json(err);
-  }
+// messages
+app.post('/message', jwtCheck, addMessage);
+app.delete('/message/:id', jwtCheck, removeMessage);
+app.get('/feed', jwtCheck, getFeed);
+
+app.listen(PORT, () => {
+  const localUrl = `http://localhost:${PORT}`;
+  const exampleUrl = 'http://pris.ly/e/ts/rest-express#5-using-the-rest-api';
+  console.log(`🚀 Server ready at: ${localUrl}`);
+  console.log(`⭐️ See sample requests: ${exampleUrl}`);
 });
 
-app.get('/currentUser', jwtCheck, async (req, res) => {
-  try {
-    res.json(await currentUser(req.headers.authorization, photon));
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-app.post('/message', jwtCheck, async (req, res) => {
-  try {
-    const user = await getUserInfo(req.headers.authorization);
-    const result = await createMessage(user.sub, req.body.message, photon);
-    pusher.trigger('message', 'new-message', {
-      message: result
-    });
-    return res.json(result);
-  } catch (err) {
-    return res.status(500).json(err);
-  }
-});
-
-app.delete('/message/:id', jwtCheck, async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    res.json(await deleteMessage(id, photon));
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-app.get('/feed', jwtCheck, async (req, res) => {
-  try {
-    res.json(await feed(photon));
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-const port = process.env.PORT || 5000;
-app.listen(port, () =>
-  console.log(
-    `🚀 Server ready at: http://localhost:${port}\n⭐️ See sample requests: http://pris.ly/e/ts/rest-express#5-using-the-rest-api`
-  )
-);
+export default app;
