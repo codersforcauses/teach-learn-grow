@@ -1,0 +1,194 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "stepType": "CreateEnum",
+      "enum": "ProgramType",
+      "values": [
+        "rural"
+      ]
+    },
+    {
+      "stepType": "CreateEnum",
+      "enum": "ApplicationStatus",
+      "values": [
+        "pending",
+        "accepted",
+        "rejected"
+      ]
+    },
+    {
+      "stepType": "CreateModel",
+      "model": "Program"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Program",
+      "field": "id",
+      "type": "String",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "Program",
+      "field": "id",
+      "directive": "default"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "Program",
+      "field": "id",
+      "directive": "default",
+      "argument": "",
+      "value": "cuid()"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "Program",
+      "field": "id",
+      "directive": "id"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Program",
+      "field": "name",
+      "type": "String",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Program",
+      "field": "description",
+      "type": "String",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Program",
+      "field": "programType",
+      "type": "ProgramType",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Program",
+      "field": "startDate",
+      "type": "DateTime",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Program",
+      "field": "endDate",
+      "type": "DateTime",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Program",
+      "field": "applicationStartDate",
+      "type": "DateTime",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Program",
+      "field": "applicationEndDate",
+      "type": "DateTime",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Program",
+      "field": "updatedAt",
+      "type": "DateTime",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "Program",
+      "field": "updatedAt",
+      "directive": "updatedAt"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Program",
+      "field": "applications",
+      "type": "Application",
+      "arity": "list"
+    },
+    {
+      "stepType": "CreateModel",
+      "model": "Application"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Application",
+      "field": "id",
+      "type": "String",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "Application",
+      "field": "id",
+      "directive": "default"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "Application",
+      "field": "id",
+      "directive": "default",
+      "argument": "",
+      "value": "cuid()"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "Application",
+      "field": "id",
+      "directive": "id"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Application",
+      "field": "program",
+      "type": "Program",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Application",
+      "field": "status",
+      "type": "ApplicationStatus",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Application",
+      "field": "applicationDate",
+      "type": "DateTime",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "Application",
+      "field": "applicationDate",
+      "directive": "default"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "Application",
+      "field": "applicationDate",
+      "directive": "default",
+      "argument": "",
+      "value": "now()"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "User",
+      "field": "applications",
+      "type": "Application",
+      "arity": "list"
+    }
+  ]
+}

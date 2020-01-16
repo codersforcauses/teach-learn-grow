@@ -1,0 +1,92 @@
+datasource sqlite {
+  provider = "sqlite"
+  url = "***"
+  enabled  = true
+}
+
+// This is used in prod
+// datasource db {
+//   provider = "mysql"
+     url = "***"
+//   default  = true
+// }
+
+generator photon {
+  provider = "photonjs"
+}
+
+enum ProgramType {
+  rural
+}
+
+enum ApplicationStatus {
+  pending
+  accepted
+  rejected
+}
+
+model Permission {
+  name        String   @default(cuid()) @id
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Role {
+  name        String       @default(cuid()) @id
+  description String
+  permissions Permission[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model User {
+  id            String       @default(cuid()) @id
+  email         String?      @unique
+  name          String?
+  nickname      String?
+  avatarUrl     String
+  posts         Post[]
+  messages      Message[]
+  roles         Role[]
+  permissions   Permission[]
+  applications  Application[]
+}
+
+model Post {
+  id        String   @default(cuid()) @id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  published Boolean  @default(true)
+  title     String
+  content   String?
+  author    User?
+}
+
+model Message {
+  id        String   @default(cuid()) @id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  text      String
+  author    User
+}
+
+model Program {
+  id                      String         @default(cuid()) @id
+  name                    String   
+  description             String
+  programType             ProgramType
+  startDate               DateTime
+  endDate                 DateTime
+  applicationStartDate    DateTime
+  applicationEndDate      DateTime
+  updatedAt               DateTime       @updatedAt
+  applications            Application[]
+}
+
+model Application {
+  id                  String               @default(cuid()) @id
+  program             Program     
+  status              ApplicationStatus 
+  applicationDate     DateTime             @default(now())
+}
