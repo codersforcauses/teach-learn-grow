@@ -15,6 +15,16 @@ generator photon {
   provider = "photonjs"
 }
 
+enum ProgramType {
+  rural
+}
+
+enum ApplicationStatus {
+  pending
+  accepted
+  rejected
+}
+
 model Permission {
   name        String   @default(cuid()) @id
   description String
@@ -31,15 +41,16 @@ model Role {
 }
 
 model User {
-  id          String       @default(cuid()) @id
-  email       String?      @unique
-  name        String?
-  nickname    String?
-  avatarUrl   String
-  posts       Post[]
-  messages    Message[]
-  roles       Role[]
-  permissions Permission[]
+  id            String       @default(cuid()) @id
+  email         String?      @unique
+  name          String?
+  nickname      String?
+  avatarUrl     String
+  posts         Post[]
+  messages      Message[]
+  roles         Role[]
+  permissions   Permission[]
+  applications  Application[]
 }
 
 model Post {
@@ -58,4 +69,24 @@ model Message {
   updatedAt DateTime @updatedAt
   text      String
   author    User
+}
+
+model Program {
+  id                      String         @default(cuid()) @id
+  name                    String   
+  description             String
+  programType             ProgramType
+  startDate               DateTime
+  endDate                 DateTime
+  applicationStartDate    DateTime
+  applicationEndDate      DateTime
+  updatedAt               DateTime       @updatedAt
+  applications            Application[]
+}
+
+model Application {
+  id                  String               @default(cuid()) @id
+  program             Program     
+  status              ApplicationStatus 
+  applicationDate     DateTime             @default(now())
 }
