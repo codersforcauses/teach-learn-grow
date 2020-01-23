@@ -4,7 +4,8 @@ import {
   getUserInfo,
   createUser,
   updateUser,
-  currentUser
+  currentUser,
+  userPermissions
 } from '../services/user';
 import photon from '../services/photon';
 
@@ -36,3 +37,19 @@ export const retrieveUser: RequestHandler = async (req, res) => {
     res.status(500).json(err);
   }
 };
+
+export const retrieveUserPermissions: RequestHandler = async (req, res) => {
+  try {
+    const { email } = req.params;
+    console.log(email);
+    let foo = await userPermissions(email, photon);
+    console.log(foo);
+    res.json(foo);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+
+
+

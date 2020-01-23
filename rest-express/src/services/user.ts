@@ -39,3 +39,11 @@ export const currentUser = async (
 
   return await photon.users.findOne({ where: { id: user.sub } });
 };
+
+export const userPermissions = async (email: string, photon: Photon) => {
+  return await photon.users.findOne({
+    where: {
+      email
+    }
+  });
+};

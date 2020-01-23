@@ -3,8 +3,9 @@ import * as bodyParser from 'body-parser';
 import cors from 'cors';
 import { PORT } from './config';
 import { jwtCheck } from './services/auth';
-import { upsertUser, retrieveUser } from './controllers/user';
+import { upsertUser, retrieveUser, retrieveUserPermissions } from './controllers/user';
 import { addMessage, removeMessage, getFeed } from './controllers/message';
+
 
 const app = express();
 
@@ -12,8 +13,12 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // user
-app.post(`/user`, jwtCheck, upsertUser);
-app.get('/currentUser', jwtCheck, retrieveUser);
+app.post('/user', upsertUser);
+app.get('/currentUser',jwtCheck, retrieveUser);
+app.get('/userPermissions/:email', retrieveUserPermissions);
+
+
+
 
 // messages
 app.post('/message', jwtCheck, addMessage);

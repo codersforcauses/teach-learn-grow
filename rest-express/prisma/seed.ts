@@ -7,19 +7,29 @@ async function main() {
     data: {
       email: 'alice@prisma.io',
       name: 'Alice',
+      avatarUrl: 'https://www.prisma.io/blog/z11sg6ipb3i1/',
       posts: {
         create: {
           title: 'Watch the talks from Prisma Day 2019',
           content: 'https://www.prisma.io/blog/z11sg6ipb3i1/',
           published: true
         }
+      },
+      permissions: {
+        create: {
+          name: 'Vol',
+          description: 'Volunteering'
+        }
       }
+
+      
     }
   });
   await photon.users.create({
     data: {
       email: 'bob@prisma.io',
       name: 'Bob',
+      avatarUrl: 'https://graphqlweekly.com/',
       posts: {
         create: [
           {
@@ -36,6 +46,8 @@ async function main() {
       }
     }
   });
+
+
 }
 
 main()
