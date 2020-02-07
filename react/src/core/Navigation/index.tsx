@@ -38,6 +38,15 @@ const Navigation = () => {
           >
             <MenuIcon />
           </IconButton>
+
+          <a href="localhost:3000">
+            <img 
+              width="50" 
+              height="50" 
+              src="https://images.squarespace-cdn.com/content/568dcb0e5a5668ae353cb7cb/1554482990838-WSJFHJ6ODVZEXYGL50J2/teach-learn-grow-logo.png?content-type=image%2Fpng" 
+            ></img>
+          </a>
+
           <Heading>Starter App</Heading>
           <RightContainer>
             {isAuthenticated ? (

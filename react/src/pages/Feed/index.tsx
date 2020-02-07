@@ -1,103 +1,77 @@
-import { Box, Typography } from '@material-ui/core';
-import Pusher from 'pusher-js';
 import React, { useEffect, useRef, useState } from 'react';
-import SimpleBar from 'simplebar-react';
-import styled from 'styled-components';
-import { useAuth0 } from '../../authService';
-import { PUSHER_CLUSTER, PUSHER_ID } from '../../config';
-import MyEditor from '../../core/Editor';
-import Messages, { IMessage } from '../../core/Messages';
-import SkeletonCard from '../../core/SkeletonCard';
-import { getFeed, updateUser } from './services';
+import {
+  Card,
+  CardActionArea,
+  CardMedia,
+  CardContent,
+  CardActions,
+  Button,
+  makeStyles,
+  Typography,
+} from '@material-ui/core';
 
-const Heading = styled(Box)`
-  font-weight: 100;
-  font-size: 2rem;
-  margin-bottom: 2rem;
-`;
-
-const Container = styled('div')`
-  display: flex;
-  flex-direction: column;
-`;
+const useStyles = makeStyles({
+  root: {
+    maxWidth: 1000,
+  },
+  media: {
+    height: 140,
+  },
+});
 
 export default function Feed() {
-  const { getTokenSilently, user } = useAuth0();
-  const [feed, setFeed] = useState<IMessage[]>([]);
-  const [loading, setLoading] = useState(false);
-  const scrollableNodeRef = useRef();
 
-  const scrollBottom = () => {
-    if (scrollableNodeRef) {
-      // @ts-ignore not sure why typescript not working here
-      scrollableNodeRef.current.scrollTop =
-        //@ts-ignore
-        scrollableNodeRef.current.scrollHeight;
-    }
-  };
-  const addNewMessage = (message: IMessage) => {
-    setFeed(prevFeed => [...prevFeed, message]);
-    scrollBottom();
-  };
-
-  const handleMessageDelete = (message: IMessage) => {
-    setFeed(prevFeed => prevFeed.filter(item => item.id !== message.id));
-  };
-
-  useEffect(() => {
-    updateUser(setLoading, getTokenSilently);
-
-    getFeed(setFeed, setLoading, getTokenSilently);
-    const pusher = new Pusher(PUSHER_ID, {
-      cluster: PUSHER_CLUSTER,
-      forceTLS: true
-    });
-    const channel = pusher.subscribe('message');
-    channel.bind('new-message', function({ message }) {
-      if (message.author.id !== user.sub) {
-        setFeed(prevFeed => [...prevFeed, message]);
-        scrollBottom();
-      }
-    });
-    // eslint-disable-next-line
-  }, [user.sub]);
+  const classes = useStyles();
 
   return (
-    <>
-      <Typography component="div">
-        <Heading>Real Time Messaging</Heading>
-        {loading && (
-          <p>
-            Loads can take up to 1 minute due to Heroku free tier{' '}
-            <span role="img" aria-label="sad">
-              😢
-            </span>
-          </p>
-        )}
-      </Typography>
-
-      <Container>
-        {/* 
-        // @ts-ignore the typings are incomplete */}
-        <SimpleBar
-          autoHide={false}
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            height: '100%',
-            maxHeight: '400px'
-          }}
-          scrollableNodeProps={{ ref: scrollableNodeRef }}
-        >
-          <Messages items={feed} onMessageDelete={handleMessageDelete} />
-        </SimpleBar>
-        {loading && <SkeletonCard />}
-        <MyEditor
-          setLoading={setLoading}
-          loading={loading}
-          addNewMessage={addNewMessage}
-        />
-      </Container>
-    </>
+    <div align='center'>
+      <Card className={classes.root}>
+          <CardActionArea>
+            <CardMedia
+              className={classes.media}
+              image="https://images.squarespace-cdn.com/content/v1/568dcb0e5a5668ae353cb7cb/1554727711396-PUVETY2EM19FQ9GF8QLI/ke17ZwdGBToddI8pDm48kA4m8qmNZoG4lWcDJYML1ugUqsxRUqqbr1mOJYKfIPR7LoDQ9mXPOjoJoqy81S2I8N_N4V1vUb5AoIIIbLZhVYxCRW4BPu10St3TBAUQYVKc4Kx_jTOHIpWAlgNxSwfz8vbLh4bvYLN9M00ZcvsSh_7SpFucY9QTPtSsCbazONCa/rural-program-logo.png?format=750w"
+              title="Rural Program"
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="h2">
+                Rural Program
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                Apply for TLG Rural Program now!
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+          
+          <CardActions>
+            <Button size="small" color="primary" href='/apply'>
+              Apply
+            </Button>
+          </CardActions>
+        </Card>
+        <br></br>
+        <Card className={classes.root}>
+          <CardActionArea>
+            <CardMedia
+              className={classes.media}
+              image="https://images.squarespace-cdn.com/content/v1/568dcb0e5a5668ae353cb7cb/1554659661619-GDUP2KGSUGI4P7DL8SIY/ke17ZwdGBToddI8pDm48kA4m8qmNZoG4lWcDJYML1ugUqsxRUqqbr1mOJYKfIPR7LoDQ9mXPOjoJoqy81S2I8N_N4V1vUb5AoIIIbLZhVYxCRW4BPu10St3TBAUQYVKc4Kx_jTOHIpWAlgNxSwfz8vbLh4bvYLN9M00ZcvsSh_7SpFucY9QTPtSsCbazONCa/eMentor.png?format=750w"
+              title="E-mentor"
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="h2">
+                E-mentor
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                Apply for TLG E-mentor Program now!
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+          
+          <CardActions>
+            <Button size="small" color="primary" href='/apply'>
+              Apply
+            </Button>
+          </CardActions>
+        </Card>
+    </div>
   );
 }
