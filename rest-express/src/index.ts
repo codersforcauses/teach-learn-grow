@@ -5,6 +5,7 @@ import { PORT } from './config';
 import { jwtCheck } from './services/auth';
 import { upsertUser, retrieveUser } from './controllers/user';
 import { addMessage, removeMessage, getFeed } from './controllers/message';
+import { showPrograms,showApplicablePrograms,showIfApplied } from './controllers/program';
 
 const app = express();
 
@@ -19,6 +20,11 @@ app.get('/currentUser', jwtCheck, retrieveUser);
 app.post('/message', jwtCheck, addMessage);
 app.delete('/message/:id', jwtCheck, removeMessage);
 app.get('/feed', jwtCheck, getFeed);
+
+// programs
+app.get('/program', showPrograms);
+app.get('/applicableProgram', showApplicablePrograms);
+app.get('/checkApplied/:program', showIfApplied);
 
 app.listen(PORT, () => {
   const localUrl = `http://localhost:${PORT}`;

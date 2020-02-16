@@ -1,0 +1,56 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "stepType": "CreateField",
+      "model": "Application",
+      "field": "applicationID",
+      "type": "String",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "Application",
+      "field": "applicationID",
+      "directive": "default"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "Application",
+      "field": "applicationID",
+      "directive": "default",
+      "argument": "",
+      "value": "cuid()"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "Application",
+      "field": "applicationID",
+      "directive": "id"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Application",
+      "field": "userID",
+      "type": "String",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Application",
+      "field": "programID",
+      "type": "String",
+      "arity": "required"
+    },
+    {
+      "stepType": "DeleteField",
+      "model": "Application",
+      "field": "id"
+    },
+    {
+      "stepType": "DeleteField",
+      "model": "Application",
+      "field": "program"
+    }
+  ]
+}

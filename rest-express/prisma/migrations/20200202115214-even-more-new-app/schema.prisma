@@ -1,13 +1,13 @@
 datasource sqlite {
   provider = "sqlite"
-  url      = "file:dev.db"
+  url = "***"
   enabled  = true
 }
 
 // This is used in prod
 // datasource db {
 //   provider = "mysql"
-//   url      = env("MYSQL_URL")
+     url = "***"
 //   default  = true
 // }
 

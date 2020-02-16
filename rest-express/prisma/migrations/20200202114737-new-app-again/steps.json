@@ -1,0 +1,17 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "stepType": "UpdateField",
+      "model": "Application",
+      "field": "userID",
+      "type": "User"
+    },
+    {
+      "stepType": "UpdateField",
+      "model": "Application",
+      "field": "programID",
+      "type": "Program"
+    }
+  ]
+}

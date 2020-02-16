@@ -1,0 +1,29 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "stepType": "CreateField",
+      "model": "Application",
+      "field": "user",
+      "type": "User",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Application",
+      "field": "program",
+      "type": "Program",
+      "arity": "required"
+    },
+    {
+      "stepType": "DeleteField",
+      "model": "Application",
+      "field": "userID"
+    },
+    {
+      "stepType": "DeleteField",
+      "model": "Application",
+      "field": "programID"
+    }
+  ]
+}
